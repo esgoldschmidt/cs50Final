@@ -3,6 +3,7 @@ from sqlite3 import Error
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
+from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
@@ -31,7 +32,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///unique.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unique.db'
+db = SQLAlchemy(app)
 
 @app.route("/")
 def index():
